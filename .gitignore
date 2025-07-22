@@ -1,0 +1,44 @@
+# Pliki sesji R
+.RData
+.Rhistory
+.Rapp.history
+.Ruserdata
+
+# Pliki środowiskowe R
+.Rprofile
+.Renviron
+
+# Foldery tymczasowe
+.Rproj.user/
+tmp/
+temp/
+*_cache/
+
+# Pliki tymczasowe/kompilacyjne
+*.log
+*.aux
+*.out
+*.toc
+*.nb.html
+*_files/
+*.utf8.md
+*.knit.md
+
+# Pliki Markdown — wszystkie oprócz README.md
+*.md
+!README.md
+
+# Systemowe
+.DS_Store
+Thumbs.db
+
+# Pliki pakietów R (jeśli budujesz paczki)
+.Rcheck/
+
+# Visual Studio Code (jeśli używasz)
+.vscode/
+
+# renv — tylko katalogi, NIE pliku renv.lock
+renv/library/
+renv/python/
+renv/staging/

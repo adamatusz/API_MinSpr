@@ -1,0 +1,3 @@
+https://api-krs.ms.gov.pl/api/krs/OdpisAktualny/00001115426?rejestr=S&format=json
+https://api-krs.ms.gov.pl/api/krs/OdpisAktualny/0001115556?rejestr=S&format=json
+https://www.doogal.co.uk/ShowMap?postcode=NG5%206JQ
