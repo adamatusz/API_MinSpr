@@ -87,8 +87,8 @@ server <- function(input, output, session) {
     
     # Wczytaj plik Excela
     uploaded_krs_list <- read_excel(input$uploadKrs$datapath) %>%
-      select("nr KRS") %>%
-      rename(nr_KRS = "nr KRS")
+      select("KRS") %>%
+      rename(nr_KRS = "KRS")
     
     # Pusta lista na wyniki
     wyniki_api <- list()
