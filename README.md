@@ -1,4 +1,15 @@
-# Projekt to aplikacja Shiny służąca do pobierania i przetwarzania danych z Krajowego Rejestru Sądowego (KRS) z wykorzystaniem oficjalnego API Ministerstwa Sprawiedliwości. Aplikacja umożliwia użytkownikowi wgranie listy numerów KRS w pliku Excel, pobranie aktualnych odpisów w formacie JSON, przetworzenie ich do tabeli oraz zapis wyników do pliku **`.xlsx`**.​
+---
+title: "Dokumentacja projektu KRS - API Ministerstwa Sprawiedliwości"
+subtitle: "Projekt zaliczeniowy z Automatyzacja procesów w inżynierii oprogramowania 5 sem. III rok"
+author: "Adam Matuszczyk, 74508"
+output:  
+  pdf_document:
+    toc: false
+    toc_depth: 2
+    number_sections: true
+---
+
+## Projekt to aplikacja Shiny służąca do pobierania i przetwarzania danych z Krajowego Rejestru Sądowego (KRS) z wykorzystaniem oficjalnego API Ministerstwa Sprawiedliwości. Aplikacja umożliwia użytkownikowi wgranie listy numerów KRS w pliku Excel, pobranie aktualnych odpisów w formacie JSON, przetworzenie ich do tabeli oraz zapis wyników do pliku **`.xlsx`**.​
 
 Aplikacja działa jako aplikacja webowa na platformie shinyapps.io: [**`https://adamatusz.shinyapps.io/MS_KRS/`**](https://adamatusz.shinyapps.io/MS_KRS/) oraz ma kod źródłowy udostępniony w repozytorium GitHub: [**`https://github.com/adamatusz/API_MinSpr`**](https://github.com/adamatusz/API_MinSpr).​
 
