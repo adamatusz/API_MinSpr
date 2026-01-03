@@ -18,7 +18,7 @@ suppressPackageStartupMessages({
 
 # Ustawienie katalogu roboczego - ważne dla wczytywania krs.xlsx
 # lista_krs <- read_xlsx("krs.xlsx") %>% select("nr KRS") %>% rename(nr_KRS = "nr KRS")
-lista_krs <- read_xlsx("Zeszyt11.xlsx") %>% select("KRS") %>% rename(nr_KRS = "KRS")
+lista_krs <- read_xlsx("c:/Users/adamm/Documents/Adam/krs/API_MinSpr-main/Zeszyt11.xlsx") %>% select("KRS") %>% rename(nr_KRS = "KRS")
 
 
 # Pusta lista na wyniki
@@ -29,12 +29,12 @@ brakujace_krs_numery <- c()
 
 # Pętla po numerach KRS
 for (krs_num in lista_krs$nr_KRS) {
-  
+
   url <- paste0("https://api-krs.ms.gov.pl/api/krs/OdpisAktualny/",
                 krs_num, "?rejestr=S&format=json")
-  
+
   res <- GET(url)
-  
+
   if (status_code(res) == 200) {
     data_txt <- content(res, as = "text", encoding = "UTF-8")
     data_json <- fromJSON(data_txt, flatten = TRUE)
@@ -52,9 +52,9 @@ krs_from_JSON <- jsonlite::fromJSON(krs_json_output)
 lista_wynikow <- list()
 
 for (krs_numer in lista_krs$nr_KRS) {
-  
+
   dane_dla_tego_krs <- krs_from_JSON[[as.character(krs_numer)]]
-  
+
   nazwa <- NA
   ulica <- NA
   nr_domu <- NA
@@ -63,14 +63,14 @@ for (krs_numer in lista_krs$nr_KRS) {
   miejscowosc <- NA
   status_opp <- NA
   reprezentacja <- NA
-  
+
   if (!is.null(dane_dla_tego_krs$odpis) &&
       !is.null(dane_dla_tego_krs$odpis$dane)) {
-    
+
     # Dział 1 - Dane Podmiotu i Adres
     if (!is.null(dane_dla_tego_krs$odpis$dane$dzial1)) {
       dzial1_dane <- dane_dla_tego_krs$odpis$dane$dzial1
-      
+
       # Dane podmiotu
       if (!is.null(dzial1_dane$danePodmiotu)) {
         if (!is.null(dzial1_dane$danePodmiotu$nazwa)) {
@@ -80,7 +80,7 @@ for (krs_numer in lista_krs$nr_KRS) {
           status_opp <- dzial1_dane$danePodmiotu$czyPosiadaStatusOPP
         }
       }
-      
+
       # Dane adresowe
       if (!is.null(dzial1_dane$siedzibaIAdres) && !is.null(dzial1_dane$siedzibaIAdres$adres)) {
         adres_dane <- dzial1_dane$siedzibaIAdres$adres
@@ -101,12 +101,12 @@ for (krs_numer in lista_krs$nr_KRS) {
         }
       }
     }
-    
+
     # Dział 2 - Reprezentacja
     if (!is.null(dane_dla_tego_krs$odpis$dane$dzial2) &&
         !is.null(dane_dla_tego_krs$odpis$dane$dzial2$reprezentacja) &&
         !is.null(dane_dla_tego_krs$odpis$dane$dzial2$reprezentacja$sklad)) {
-      
+
       if (nrow(dane_dla_tego_krs$odpis$dane$dzial2$reprezentacja$sklad) >= 1 &&
           ncol(dane_dla_tego_krs$odpis$dane$dzial2$reprezentacja$sklad) >= 2) {
         reprezentacja <- dane_dla_tego_krs$odpis$dane$dzial2$reprezentacja$sklad[1, 2]
@@ -115,8 +115,8 @@ for (krs_numer in lista_krs$nr_KRS) {
       }
     }
   }
-  
-  
+
+
   # Wiersz danych dla bieżącego KRS-u jako małą ramkę danych
   wiersz_aktualny_krs <- data.frame(
     KRS = krs_numer,
@@ -130,7 +130,7 @@ for (krs_numer in lista_krs$nr_KRS) {
     Reprezentacja = reprezentacja,
     stringsAsFactors = FALSE
   )
-  
+
   # Dodaje wiersz do listy wyników
   lista_wynikow[[as.character(krs_numer)]] <- wiersz_aktualny_krs
 }
@@ -148,7 +148,7 @@ sumaWszystkichStrachow <- c(
 # --- INTERFEJS UŻYTKOWNIKA (UI) ---
 ui <- fluidPage(
   titlePanel("Dane KRS z API Ministerstwa Sprawiedliwości"),
-  
+
   # SidebarLayout na tabsetPanel
   tabsetPanel(
     tabPanel("Tabela Danych KRS", # Pierwsza zakładka
@@ -184,12 +184,12 @@ ui <- fluidPage(
 
 # --- LOGIKA SERWERA (SERVER) ---
 server <- function(input, output, session) {
-  
+
   # Renderowanie tabeli
   output$krsTable <- renderDT({
     datatable(finalna_tabela_krs, options = list(pageLength = 10))
   })
-  
+
   # Renderowanie podsumowania statusu OPP
   output$oppSummary <- renderPrint({
     print(sumaWszystkichStrachow)
